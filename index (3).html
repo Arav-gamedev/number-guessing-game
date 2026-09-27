@@ -1,0 +1,117 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Sakura Guess Quest</title><style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#080b18;color:#fff;font-family:Arial,sans-serif}.scene{width:min(1100px,100vw);min-height:680px;position:relative;overflow:hidden;border-radius:28px;padding:24px;background:radial-gradient(circle at 78% 18%,#5264a0,#20294f 25%,#11172e 60%,#070a16);border:1px solid #7180b7}.moon{position:absolute;right:10%;top:8%;width:95px;height:95px;border-radius:50%;background:#fff6d6;box-shadow:0 0 45px #fff6c855}.mountain{position:absolute;left:-8%;right:-8%;bottom:0;height:42%;background:linear-gradient(140deg,transparent 0 25%,#1b2440 26% 47%,#0b1024 48%);clip-path:polygon(42% 0,55% 34%,68% 15%,88% 60%,100% 100%,0 100%)}.water{position:absolute;left:0;right:0;bottom:0;height:14%;background:linear-gradient(#1b2952,#0a1027)}.lantern{position:absolute;right:4%;bottom:20%;font-size:75px;filter:drop-shadow(0 0 18px #ffd66a)}.character{position:absolute;left:2%;bottom:0;font-size:clamp(150px,24vw,260px);line-height:.8;filter:drop-shadow(0 18px 15px #0009);animation:float 3s ease-in-out infinite}.cat{position:absolute;right:11%;bottom:6%;font-size:72px}@keyframes float{50%{transform:translateY(-10px)}}.content{position:relative;z-index:5}.header{display:grid;grid-template-columns:auto 1fr auto;align-items:start;gap:15px}.title{text-align:center}.title h1{margin:0;font-size:clamp(34px,5vw,62px);font-weight:950;text-shadow:4px 5px 0 #121b45,0 0 25px #f5b8dc}.title h1 span{color:#ffd866}.title p{color:#dfe6ff}.sound{width:52px;height:52px;border-radius:15px;border:1px solid #8794c7;background:#07152de8;color:#fff;font-size:24px;cursor:pointer}.stats{width:230px;display:grid;gap:8px}.stat{display:flex;justify-content:space-between;padding:10px 14px;background:#071326ea;border:1px solid #7582b8;border-radius:15px}.stat b{color:#ffd866}.layout{display:grid;grid-template-columns:250px minmax(290px,1fr) 220px;gap:16px;align-items:end;margin-top:30px}.panel{background:#071326e8;border:1px solid #6d79ad;border-radius:20px;padding:16px;box-shadow:0 14px 30px #0006}.panel h2{font-size:17px;margin:0 0 12px}.history{display:grid;gap:7px;max-height:250px;overflow:auto}.row{display:flex;justify-content:space-between;background:#101d38;border-radius:10px;padding:9px 10px}.low{color:#72c9ff}.high{color:#ff7f95}.correct{color:#7dffad}.center{text-align:center;padding:22px}.hint{color:#bac4e6}.input{width:100%;padding:15px;border-radius:18px;border:3px solid #7a86b7;background:#09152d;color:#fff;text-align:center;font-size:38px;font-weight:900;outline:none}.input:focus{border-color:#ffd866;box-shadow:0 0 22px #ffd86655}.guess{margin-top:14px;width:88%;padding:15px;border:0;border-radius:30px;background:linear-gradient(#ffe27e,#ffbc39);font-weight:950;font-size:23px;color:#1a1730;cursor:pointer;box-shadow:0 7px 0 #a7671e}.result{min-height:42px;margin-top:15px;font-size:23px;font-weight:900}.dots{display:flex;justify-content:center;gap:8px;margin-top:16px}.dot{width:39px;height:39px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#283451;border:1px solid #596687;font-weight:900}.dot.active{background:#ffd866;color:#17182a}.dot.used{background:#51607f}.side{text-align:center}.npc{font-size:70px}.bubble{background:#0a1731ed;border:1px solid #7480af;border-radius:18px;padding:14px;line-height:1.35}.bubble b{color:#ffd866}.combo{margin-top:10px;color:#cbd5e1;font-size:14px}.combo b{color:#7dffad}.new{margin-top:12px;border:0;border-radius:12px;padding:10px 15px;background:#a78bfa;color:#18162b;font-weight:900;cursor:pointer}@media(max-width:850px){.header{grid-template-columns:auto 1fr}.stats{grid-column:1/3;width:100%;grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}.character{opacity:.16}.side{display:none}}@media(max-width:500px){.scene{padding:14px}.stats{grid-template-columns:1fr}.title h1{font-size:34px}.layout{margin-top:18px}}
+/* ===== Sakura Animation Pack ===== */
+.scene{animation:sceneEnter .8s ease both}
+.moon{animation:moonGlow 4s ease-in-out infinite}
+.character{animation:characterFloat 3s ease-in-out infinite}
+.cat{animation:catSleep 2.4s ease-in-out infinite}
+.lantern{animation:lanternGlow 1.8s ease-in-out infinite}
+.title{animation:titleFloat 3.4s ease-in-out infinite}
+.title h1{animation:titleGlow 2.2s ease-in-out infinite alternate}
+.stat{animation:statFloat 3s ease-in-out infinite}
+.stat:nth-child(2){animation-delay:.2s}.stat:nth-child(3){animation-delay:.4s}
+.center{animation:panelRise .75s cubic-bezier(.2,.8,.2,1) .12s both}
+.history{animation:panelSlide .75s cubic-bezier(.2,.8,.2,1) both}
+.side{animation:sideFloat 3.1s ease-in-out infinite}
+.guess{position:relative;overflow:hidden;transition:transform .15s,filter .15s}
+.guess:hover{transform:translateY(-3px);filter:brightness(1.08)}
+.guess::after{content:"";position:absolute;top:-120%;left:-45%;width:28%;height:340%;background:#fff9;transform:rotate(22deg);animation:buttonShine 3s ease-in-out infinite}
+.input{transition:.25s}.input:focus{transform:scale(1.025)}
+.row{animation:rowIn .35s ease both}
+.result.pop{animation:resultPop .5s cubic-bezier(.2,1.35,.4,1) both}
+.result.shake{animation:shake .35s ease both}
+.dot.active{animation:dotPulse 1.1s ease-in-out infinite}
+.movingPetal{position:absolute;top:-40px;z-index:3;pointer-events:none;font-style:normal;animation:petalFall linear forwards}
+.starParticle{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 12px #fff;z-index:2;pointer-events:none;animation:twinkle 2.5s ease-in-out infinite}
+.winBurst{position:absolute;inset:0;z-index:50;pointer-events:none;overflow:hidden}
+.confetti{position:absolute;left:50%;top:48%;width:9px;height:14px;border-radius:3px;animation:confettiFly 1.3s cubic-bezier(.15,.7,.25,1) forwards}
+@keyframes sceneEnter{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+@keyframes moonGlow{50%{box-shadow:0 0 70px #fff6c899;transform:scale(1.04)}}
+@keyframes characterFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px) rotate(-1deg)}}
+@keyframes catSleep{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) rotate(2deg)}}
+@keyframes lanternGlow{50%{filter:drop-shadow(0 0 30px #ffd66a)}}
+@keyframes titleFloat{50%{transform:translateY(-6px)}}
+@keyframes titleGlow{from{filter:drop-shadow(0 0 4px transparent)}to{filter:drop-shadow(0 0 16px #ffd86688)}}
+@keyframes statFloat{50%{transform:translateY(-4px)}}
+@keyframes panelRise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes panelSlide{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+@keyframes sideFloat{50%{transform:translateY(-6px)}}
+@keyframes buttonShine{0%,45%{left:-45%;opacity:0}55%{opacity:1}78%,100%{left:125%;opacity:0}}
+@keyframes rowIn{from{opacity:0;transform:translateX(-18px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes resultPop{50%{transform:scale(1.14)}100%{transform:scale(1)}}
+@keyframes shake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(5px)}}
+@keyframes dotPulse{50%{transform:scale(1.13);box-shadow:0 0 18px #ffd866aa}}
+@keyframes petalFall{to{transform:translate3d(120px,760px,0) rotate(520deg)}}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.3)}50%{opacity:.9;transform:scale(1.3)}}
+@keyframes confettiFly{0%{opacity:1;transform:translate(-50%,-50%) rotate(0)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r))}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+</style></head><body><div class="scene"><div id="animParticles"></div><div id="animStars"></div><div class="moon"></div><div class="mountain"></div><div class="water"></div><div class="lantern">🏮</div><div class="character">👧🏻</div><div class="cat">🐈</div><div class="content"><div class="header"><button class="sound" id="sound">🔊</button><div class="title"><h1>Sakura <span>Guess Quest</span></h1><p>Guess the secret number between <b>1 and 100</b>.</p></div><div class="stats"><div class="stat">⭐ Score <b id="score">0</b></div><div class="stat">⏱️ Time <b id="time">45</b></div><div class="stat">🔥 Level <b id="level">1</b></div></div></div><div class="layout"><section class="panel"><h2>◷ Previous Guesses</h2><div class="history" id="history"></div></section><section class="panel center"><div class="hint">You have <b>5 attempts</b>.</div><input class="input" id="input" type="number" min="1" max="100" placeholder="?"><button class="guess" id="guess">🌸 Guess</button><div class="result" id="result">Your adventure begins!</div><div class="dots" id="dots"><div class="dot active">1</div><div class="dot">2</div><div class="dot">3</div><div class="dot">4</div><div class="dot">5</div></div><div class="combo">Attempts: <b id="attempts">0 / 5</b> · Combo: <b id="combo">x1</b></div><button class="new" id="new">🔄 New Game</button></section><aside class="side"><div class="npc">🦊</div><div class="bubble">💭 <i>Good luck!</i><br>I’ll tell you instantly if your guess is <b>HIGH</b> or <b>LOW</b>.</div></aside></div></div></div><script>let secret,attempts,score,level,timeLeft,timer,over,combo=1,soundOn=true,audio;const $=id=>document.getElementById(id);function beep(f=500,d=.12){if(!soundOn)return;try{audio??=new(window.AudioContext||window.webkitAudioContext)();const o=audio.createOscillator(),g=audio.createGain();o.frequency.value=f;o.connect(g);g.connect(audio.destination);g.gain.value=.035;o.start();o.stop(audio.currentTime+d)}catch(e){}}function update(){$('score').textContent=score;$('time').textContent=String(Math.max(0,timeLeft)).padStart(2,'0');$('level').textContent=level;$('attempts').textContent=attempts+' / 5';$('combo').textContent='x'+combo;[...$('dots').children].forEach((d,i)=>{d.classList.toggle('active',i===attempts&&attempts<5);d.classList.toggle('used',i<attempts)})}function addHistory(n,text,cls){const r=document.createElement('div');r.className='row';r.innerHTML='<span>Attempt '+attempts+': <b>'+n+'</b></span><span class="'+cls+'">'+text+'</span>';$('history').prepend(r)}function finish(msg,win){over=true;clearInterval(timer);$('result').textContent=msg;$('result').className='result '+(win?'correct':'high');window.__sakuraAnimateResult?.();$('input').disabled=true;$('guess').disabled=true;beep(win?900:180,.25)}function start(){window.__resetCelebration?.();clearInterval(timer);secret=Math.floor(Math.random()*100)+1;attempts=0;score=0;level=1;timeLeft=45;combo=1;over=false;$('history').innerHTML='<div class="row"><span>—</span><span>Waiting...</span></div>';$('input').value='';$('input').disabled=false;$('guess').disabled=false;$('result').textContent='Your adventure begins!';$('result').className='result';window.__sakuraAnimateResult?.();update();timer=setInterval(()=>{timeLeft--;update();if(timeLeft<=0)finish('⏰ Time is up! The number was '+secret+'.',false)},1000);$('input').focus()}function play(){if(over)return;const n=Number($('input').value);if(!Number.isInteger(n)||n<1||n>100){$('result').textContent='⚠️ Enter a whole number from 1 to 100';return}attempts++;if(n===secret){score+=(500+timeLeft*10)*combo;level=Math.min(5,1+Math.floor(score/500));addHistory(n,'🎯 Correct!','correct');update();finish('🌟 Perfect! You found it!',true);return}if(n<secret){combo=Math.min(5,combo+1);addHistory(n,'⬆️ Too Low','low');$('result').textContent='⬆️ Too Low! Go Higher!';$('result').className='result low';window.__sakuraAnimateResult?.();beep(350)}else{combo=1;addHistory(n,'⬇️ Too High','high');$('result').textContent='⬇️ Too High! Go Lower!';$('result').className='result high';window.__sakuraAnimateResult?.();beep(650)}score+=25*combo;level=Math.min(5,1+Math.floor(score/500));update();$('input').value='';if(attempts>=5)finish('💔 Game over! The number was '+secret+'.',false);else $('input').focus()}$('guess').onclick=play;$('input').addEventListener('keydown',e=>{if(e.key==='Enter')play()});$('new').onclick=start;$('sound').onclick=()=>{soundOn=!soundOn;$('sound').textContent=soundOn?'🔊':'🔇';if(soundOn)beep()};start();
+/* Animation helpers */
+(function(){
+ const scene=document.querySelector('.scene');
+ if(!scene) return;
+ const result=document.getElementById('result');
+ const history=document.getElementById('history');
+ const input=document.getElementById('input');
+ const particles=document.getElementById('animParticles');
+ const stars=document.getElementById('animStars');
+ const styleHost=document.createElement('div');
+ styleHost.style.cssText='position:absolute;inset:0;pointer-events:none;z-index:1';
+ particles?.appendChild(styleHost);
+
+ for(let i=0;i<18;i++){
+   const p=document.createElement('i'); p.className='movingPetal'; p.textContent='🌸';
+   p.style.left=Math.random()*100+'%';
+   p.style.animationDuration=(5+Math.random()*6)+'s';
+   p.style.animationDelay=(-Math.random()*8)+'s';
+   p.style.fontSize=(14+Math.random()*13)+'px';
+   styleHost.appendChild(p);
+ }
+ for(let i=0;i<20;i++){
+   const st=document.createElement('span'); st.className='starParticle';
+   st.style.left=Math.random()*100+'%'; st.style.top=(Math.random()*72)+'%';
+   st.style.animationDelay=(Math.random()*2.5)+'s';
+   stars.appendChild(st);
+ }
+
+ function animateResult(){
+   result.classList.remove('pop','shake');
+   void result.offsetWidth;
+   result.classList.add(result.classList.contains('correct') ? 'pop' : 'shake');
+ }
+
+ window.__sakuraAnimateResult=animateResult;
+ const historyObserver=new MutationObserver(()=>{
+   const first=history?.firstElementChild;
+   if(first){ first.classList.remove('row'); void first.offsetWidth; first.classList.add('row'); }
+ });
+ if(history) historyObserver.observe(history,{childList:true});
+
+ function confetti(){
+   const burst=document.createElement('div'); burst.className='winBurst';
+   const colors=['#ffd866','#ff7f95','#72c9ff','#7dffad','#c4b5fd','#fff'];
+   for(let i=0;i<42;i++){
+     const c=document.createElement('span'); c.className='confetti';
+     c.style.background=colors[i%colors.length];
+     c.style.setProperty('--x',((Math.random()-.5)*900)+'px');
+     c.style.setProperty('--y',(130+Math.random()*460)+'px');
+     c.style.setProperty('--r',((Math.random()*1000)-500)+'deg');
+     c.style.animationDelay=(Math.random()*.18)+'s';
+     burst.appendChild(c);
+   }
+   scene.appendChild(burst);
+   setTimeout(()=>burst.remove(),1500);
+ }
+
+ let celebrated=false; window.__resetCelebration=()=>{celebrated=false};
+ const winObserver=new MutationObserver(()=>{
+   if(!celebrated && result.classList.contains('correct') && /Perfect|Correct/i.test(result.textContent)){celebrated=true;confetti();}
+ });
+ winObserver.observe(result,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+
+ input?.addEventListener('input',()=>{
+   input.style.transform='scale(1.03)';
+   clearTimeout(input._animTimer);
+   input._animTimer=setTimeout(()=>input.style.transform='',140);
+ });
+})();
+</script></body></html>
